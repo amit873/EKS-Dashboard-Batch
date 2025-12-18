@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: batch1-scheduler
+  namespace: default
+spec:
+  schedule: "0 * * * *"  # Run every hour at minute 0
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: batch1-container
+            image: 058264125602.dkr.ecr.us-east-1.amazonaws.com/dashboard-repo:latest
+            args: ["batch1"]
+          restartPolicy: OnFailure
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: batch2-scheduler
+  namespace: default
+spec:
+  schedule: "30 * * * *"  # Run every hour at minute 30
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: batch2-container
+            image: 058264125602.dkr.ecr.us-east-1.amazonaws.com/dashboard-repo:latest
+            args: ["batch2"]
+          restartPolicy: OnFailure
